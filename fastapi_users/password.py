@@ -34,7 +34,7 @@ class PasswordHelper(PasswordHelperProtocol):
         return self.password_hash.verify_and_update(plain_password, hashed_password)
 
     def hash(self, password: str) -> str:
-        return self.password_hash.hash(password)
+        pass
 
     def generate(self) -> str:
         return secrets.token_urlsafe()

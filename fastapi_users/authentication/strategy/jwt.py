@@ -34,11 +34,11 @@ class JWTStrategy(Strategy[models.UP, models.ID], Generic[models.UP, models.ID])
 
     @property
     def encode_key(self) -> SecretType:
-        return self.secret
+        pass
 
     @property
     def decode_key(self) -> SecretType:
-        return self.public_key or self.secret
+        pass
 
     async def read_token(
         self, token: str | None, user_manager: BaseUserManager[models.UP, models.ID]

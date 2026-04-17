@@ -51,24 +51,6 @@ def get_register_router(
         user_create: user_create_schema,  # type: ignore
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
-        try:
-            created_user = await user_manager.create(
-                user_create, safe=True, request=request
-            )
-        except exceptions.UserAlreadyExists:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail=ErrorCode.REGISTER_USER_ALREADY_EXISTS,
-            )
-        except exceptions.InvalidPasswordException as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={
-                    "code": ErrorCode.REGISTER_INVALID_PASSWORD,
-                    "reason": e.reason,
-                },
-            )
-
-        return user_schema.model_validate(created_user)
+        pass
 
     return router

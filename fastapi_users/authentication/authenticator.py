@@ -93,14 +93,7 @@ class Authenticator(Generic[models.UP, models.ID]):
 
         @with_signature(signature)
         async def current_user_token_dependency(*args: Any, **kwargs: Any):
-            return await self._authenticate(
-                *args,
-                optional=optional,
-                active=active,
-                verified=verified,
-                superuser=superuser,
-                **kwargs,
-            )
+            pass
 
         return current_user_token_dependency
 
@@ -138,15 +131,7 @@ class Authenticator(Generic[models.UP, models.ID]):
 
         @with_signature(signature)
         async def current_user_dependency(*args: Any, **kwargs: Any):
-            user, _ = await self._authenticate(
-                *args,
-                optional=optional,
-                active=active,
-                verified=verified,
-                superuser=superuser,
-                **kwargs,
-            )
-            return user
+            pass
 
         return current_user_dependency
 

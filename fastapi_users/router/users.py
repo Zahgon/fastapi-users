@@ -27,11 +27,7 @@ def get_users_router(
         id: str,
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ) -> models.UP:
-        try:
-            parsed_id = user_manager.parse_id(id)
-            return await user_manager.get(parsed_id)
-        except (exceptions.UserNotExists, exceptions.InvalidID) as e:
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND) from e
+        pass
 
     @router.get(
         "/me",
@@ -46,7 +42,7 @@ def get_users_router(
     async def me(
         user: models.UP = Depends(get_current_active_user),
     ):
-        return user_schema.model_validate(user)
+        pass
 
     @router.patch(
         "/me",
@@ -90,24 +86,7 @@ def get_users_router(
         user: models.UP = Depends(get_current_active_user),
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
-        try:
-            user = await user_manager.update(
-                user_update, user, safe=True, request=request
-            )
-            return user_schema.model_validate(user)
-        except exceptions.InvalidPasswordException as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={
-                    "code": ErrorCode.UPDATE_USER_INVALID_PASSWORD,
-                    "reason": e.reason,
-                },
-            )
-        except exceptions.UserAlreadyExists:
-            raise HTTPException(
-                status.HTTP_400_BAD_REQUEST,
-                detail=ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS,
-            )
+        pass
 
     @router.get(
         "/{id}",
@@ -127,7 +106,7 @@ def get_users_router(
         },
     )
     async def get_user(user=Depends(get_user_or_404)):
-        return user_schema.model_validate(user)
+        pass
 
     @router.patch(
         "/{id}",
@@ -177,24 +156,7 @@ def get_users_router(
         user=Depends(get_user_or_404),
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
-        try:
-            user = await user_manager.update(
-                user_update, user, safe=False, request=request
-            )
-            return user_schema.model_validate(user)
-        except exceptions.InvalidPasswordException as e:
-            raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail={
-                    "code": ErrorCode.UPDATE_USER_INVALID_PASSWORD,
-                    "reason": e.reason,
-                },
-            )
-        except exceptions.UserAlreadyExists:
-            raise HTTPException(
-                status.HTTP_400_BAD_REQUEST,
-                detail=ErrorCode.UPDATE_USER_EMAIL_ALREADY_EXISTS,
-            )
+        pass
 
     @router.delete(
         "/{id}",
@@ -219,7 +181,6 @@ def get_users_router(
         user=Depends(get_user_or_404),
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
-        await user_manager.delete(user, request=request)
-        return None
+        pass
 
     return router

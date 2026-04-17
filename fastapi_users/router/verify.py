@@ -22,17 +22,7 @@ def get_verify_router(
         email: EmailStr = Body(..., embed=True),
         user_manager: BaseUserManager[models.UP, models.ID] = Depends(get_user_manager),
     ):
-        try:
-            user = await user_manager.get_by_email(email)
-            await user_manager.request_verify(user, request)
-        except (
-            exceptions.UserNotExists,
-            exceptions.UserInactive,
-            exceptions.UserAlreadyVerified,
-        ):
-            pass
-
-        return None
+        pass
 
     @router.post(
         "/verify",
